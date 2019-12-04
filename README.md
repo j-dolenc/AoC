@@ -1,2 +1,2 @@
 # AoC
-Adven of Code puzzles
+Advent of Code puzzles
