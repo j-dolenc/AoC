@@ -26,7 +26,6 @@ public class n4{
             } 
             num = i;
             boolean imaDvaZaporedna = false;
-            
             int stPonovitev = 1;
             if(seVeca){
                 while (num!=0) { 
@@ -41,7 +40,6 @@ public class n4{
                     else{
                         stPonovitev = 1;
                     }
-                
                     prev = rem; 
                 }
             }
