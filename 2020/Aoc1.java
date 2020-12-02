@@ -12,7 +12,7 @@ public class Aoc1{
             ind++;
         }
         ind = 0;
-        int rez = 0;
+        //int rez = 0;
         while(n[ind] != 0){
 
             int j = ind+1;
@@ -32,5 +32,7 @@ public class Aoc1{
             
             ind++;
         }
+
+        sc.close();
     }
 }
