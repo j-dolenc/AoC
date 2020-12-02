@@ -14,19 +14,23 @@ public class Aoc1{
         ind = 0;
         int rez = 0;
         while(n[ind] != 0){
+
             int j = ind+1;
             while(n[j] != 0){
+
                 int k = j+1;
                 while(n[k] != 0){
+
                     if(n[ind]+ n[j]+ n[k] == 2020){
                         System.out.println(n[ind]*n[j]*n[k]);   
                     }
                     k++;
                 }
+
                 j++;
             }
+            
             ind++;
         }
-
     }
 }
