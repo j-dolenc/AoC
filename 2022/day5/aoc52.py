@@ -21,11 +21,10 @@ with open("input.txt", encoding='utf8') as f:
             quant = int(quant)
             frm = int(frm)
             to = int(to)
-            for i in range(0,quant):    
-                arr[to-1].append(arr[frm-1].pop())
+            lastq = arr[frm-1][-quant:]
+            arr[to-1].extend(lastq)
+            for i in range(0,quant):
+                arr[frm-1].pop()
     for i in arr:
         res= res + i[len(i)-1]       
-
     print(res)    
-
-
