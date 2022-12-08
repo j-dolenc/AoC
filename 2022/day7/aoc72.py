@@ -5,25 +5,29 @@ currentDirIndex = 0
 lines = open("input.txt", encoding='utf8')
 
 
+def indexOfCurrentDir(dirName):
+    index = 0
+    for dir in system:
+        if dir[0] == dirName:
+            return index
+        index+=1
+    return -1
+
+
 for line in lines:
-    
+
     currentCommand = line.strip().split(" ")
-    
-    
     if currentCommand[0] == "$":
         if currentCommand[1] == "cd":
-            
             if currentCommand[2] == "/":
                 currentDir = "/"
                 currentDirIndex = 0
             elif currentCommand[2] == "..":
                 
-                
                 currentDir = system[currentDirIndex][1]
                 currentDirIndex =  system[currentDirIndex][4]
-            
+
             else:
-            
                 currentDir = currentCommand[2]
                 ind = 0
                 for i in system:
@@ -35,10 +39,8 @@ for line in lines:
         else:
             continue
     elif currentCommand[0] == "dir":
-        #print("Found dir: " + currentCommand[1])
         system.append([currentCommand[1], currentDir, 0, True,currentDirIndex])
     else:
-        #print("Found file: " + currentCommand[1] + " of size " + currentCommand[0])
         system.append([currentCommand[1], currentDir,int(currentCommand[0]), False,currentDirIndex])
         changesizeOf = currentDir
         indeks = currentDirIndex
@@ -48,11 +50,15 @@ for line in lines:
             if system[indeks][0] == "/":
                 break
             indeks = system[indeks][4]
-         
-sums =0
+            
+unusedSpace = 70000000-system[0][2] #needs to be at least 300000
 
+delete = "/"
+sizeofDel = system[0][2]
+ind = 0
 for i in system:
-    if i[3] and i[2] < 100000 :
-        sums+=i[2]
-        
-print(sums)
+    if ((unusedSpace+ i[2]) >= 30000000):
+        if(i[2] < sizeofDel):
+            sizeofDel = i[2]
+            delete = i[0]
+print(sizeofDel)
