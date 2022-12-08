@@ -1,7 +1,18 @@
-import re
-import numpy as np
+
 
 #poisci curr in vrni starsev string
+def isDescendant(grid, child, parent):
+    indeks = findCurr(grid,child)
+    now = grid[indeks][1]
+    while True:
+        if(now == parent):
+            return True
+        if(now == "/"):
+            break
+        indeks = findCurr(grid,grid[indeks][1])
+        now = grid[indeks][1]
+    return False
+
 def findParent(grid, currentDir):
     for i in grid:
         if i[0] == currentDir:
@@ -28,6 +39,7 @@ def result(grid):
     sums =0
     for i in grid:
         if i[3] and i[2] < 100000 :
+            print(i)
             sums+=i[2]
     return sums
 
@@ -37,90 +49,51 @@ dirs = [["/", "", 0, True]]
 #dirs = [["imedira", "fotr", "size", isDir], ["imedira2","fotr","size", isDir]]
 cmnds = []
 curr = "/"
-last = "/"
 currIndex = 0
 ls = False
 
 for line in lines:
     currCmnd = line.strip().split(" ")
-    #cmnds.append(line.strip().split(" "))
-
-    #listamo direktorij
-    if ls and currCmnd[0] != "$":
-        
-
-        #ce je dir
-        if currCmnd[0] == "dir":
-
-            print("ls dir: " + currCmnd[1])
-
-            #preverimo ce imamo direktorij ze v gridu
-            exists= exist(dirs,currCmnd[1])
-            
-            #ce ga nimamo ga dodamo
-            if not exists:    
-                dirs.append([currCmnd[1],curr,0,True])
-                #print(dirs)
-
-    	#ce je file
-        else: 
-            #dodamo ga v grid kot file isDir = False, dodamo size, dodamo size vsem njegovim starsem...
-            exists = exist(dirs,currCmnd[1])
-            if not exists:
-                dirs.append([currCmnd[1],curr,0,True])
-                koren = curr
-                #do korena dodajas size fila
-                while True :
-                    #poisces trenutnega in mu didas size
-                    index = findCurr(dirs, koren)
-                    
-                    dirs[index][2] += int(currCmnd[0])
-                    if(koren == "/"):
-                        break
-                    koren = dirs[index][1]
-                    
-
-            print("ls file: " + currCmnd[1])
-
-
-    #command is cd or ls
-
     if currCmnd[0] == "$":
-
-        # ce je komanda cd
         if currCmnd[1] == "cd":
-            ls = False
-            
-
-            # ce je komanda za nazaj, current nastavimo na starsa
-            if currCmnd[2] == "..":
-                # poisci curr v dirs in nastavi curr na starsa dirs[curr][1]
-                print("go back")
-                curr =findParent(dirs, curr)
-            
-            # komanda gre naprej na nekega sina
+            if(currCmnd[2] == "/"):
+                curr = "/"
+            elif currCmnd[2] == "..":
+                curr = findParent(dirs,curr)
             else:
-
-                print("move to: " + currCmnd[2])
-                #preverimo ce sin ze obstaja v gridu
-                exists = exist(dirs,currCmnd[2])
-
-                # ce ne obstaja ga ustvarimo
-                if not exists:    
-                    dirs.append([currCmnd[2],curr,0,True])
-                    #print(dirs)
-
-                #spremenimo trenutni direktorij
+                if not exist(dirs, currCmnd[2]):
+                    dirs.append([currCmnd[2],curr,0, True])
                 curr = currCmnd[2]
-
-        #ce je komanda ls damo flag ls
         elif currCmnd[1] == "ls":
-            ls = True
-            print("start ls:")
+            continue
+        
+    elif currCmnd[0] == "dir":
+        if not exist(dirs, currCmnd[1]):
+            dirs.append([currCmnd[1],curr,0, True])
+    elif currCmnd[0].isdigit():
+        if not exist(dirs, currCmnd[1]):
+            dirs.append([currCmnd[1],curr,int(currCmnd[0]), False])            
+
+
+sestevek = 0 
+for i in dirs:
     
+    if i[3]:
+        isum = 0
+        for k in dirs:
+            #check if k is descendant of i
+            if not k[3]:
+                #print(k[0] + " je potomec od " + i[0] + "? ")
+                #print(isDescendant(dirs,k[0],i[0]))
+                if isDescendant(dirs,k[0],i[0]):
+                    isum+= int(k[2])
+        print(isum)
+        if(isum <= 100000):
+            sestevek+=isum
+        isum = 0
 
-print(result(dirs))
-
+print(sestevek)    
+#print(result(dirs))
 
 
 #for line in f:
