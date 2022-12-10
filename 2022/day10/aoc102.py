@@ -22,7 +22,7 @@ for line in lines:
         if(cycle%40 == 0):
             print("")
         pixel+=1
-        if(cycle == 20 or cycle == 60 or cycle == 100 or cycle == 140 or cycle == 180 or cycle == 220):
+        if(cycle%40 == 20):
             signalPower += (cycle* register)
         cycle+=1
     if(command[0] != "noop"):
