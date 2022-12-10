@@ -1,6 +1,5 @@
 lines = open("input.txt", encoding="utf8")
 
-
 cycle = 1
 signalPower = 0
 register = 1
@@ -8,8 +7,6 @@ pixel = 0
 for line in lines:
 
     command = [i for i in line.strip().split()]
-    
-    goFor = 0
 
     if(command[0] == "noop"):
         goFor = 1
@@ -30,4 +27,3 @@ for line in lines:
         cycle+=1
     if(command[0] != "noop"):
         register+=int(command[1])
-    
