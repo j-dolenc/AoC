@@ -1,2 +1,2 @@
 # AoC
-Advent of Code puzzles
+My Advent of Code puzzle solutions :)
