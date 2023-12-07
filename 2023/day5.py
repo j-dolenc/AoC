@@ -93,15 +93,10 @@ while i < len(lines):
     new_changed = []
     
     for j in range(len(current)):
-        # if(current[j] >= src_range_start and current[j] < src_range_end and changed_arr[j] == 0):
-        #     current[j] = dest_range_start + (current[j] - src_range_start)
-        #     changed_arr[j] = 1
-            #print("current: " + str(current[j]))
+        
         current_range_start = current[j][0]
         current_range_end = current[j][1]
-        #check if src_range and current_range overlap
-        #the part that doesnt overlap should be added separately to current
-        #the part that does should be updated with dest
+
         if changed_arr[j] == 1:
             #already changed
             new_current.append(current[j])
